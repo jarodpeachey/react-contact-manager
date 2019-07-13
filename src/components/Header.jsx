@@ -43,7 +43,8 @@ class Header extends Component {
 }
 
 const Wrapper = styled.div`
-  background: ${({ theme }) => theme.colors.main}
+  background: ${({ theme }) => theme.colors.main};
+  color: white;
 `;
 
 export default Header;

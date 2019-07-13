@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
-import Header from './components/Header';
+import Contact from './Contact';
 
-class Application extends Component {
+class ContactsList extends Component {
   static propTypes = {
-    children: PropTypes.element,
+    contacts: PropTypes.array,
   };
 
   constructor (props) {
@@ -15,25 +15,23 @@ class Application extends Component {
     };
   }
 
-  // componentDidMount () {
+  componentDidMount () {
 
-  // }
+  }
 
-  // shouldComponentUpdate () {
+  shouldComponentUpdate () {
 
-  // }
+  }
 
   render () {
-    const header = <Header />;
-
+    const { contacts } = this.props;
     return (
       <div>
-        {header}
-        {this.props.children}
+        {contacts.map(contact => <Contact contact={contact} />)}
       </div>
     );
   }
 }
 
-export default Application;
+export default ContactsList;
 
