@@ -23,13 +23,13 @@ const breakpoints = {
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#1dc798',
-      dark: '#1dc798',
+      main: '#FF6347',
+      dark: '#e5593f',
       contrastText: '#f7f7f7',
     }, // Feel free to change this
     secondary: {
-      main: '#ffffff',
-      dark: '#f1f1f1',
+      main: '#1dc798',
+      dark: '#1dc798',
       contrastText: '#333',
     }
   },

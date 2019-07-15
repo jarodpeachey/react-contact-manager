@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import styled from 'styled-components';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import Delete from '@material-ui/icons/Delete';
+import { withStyles } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
 
 class Contact extends Component {
   static propTypes = {
     contact: PropTypes.object,
+    classes: PropTypes.object,
   };
 
   constructor (props) {
@@ -27,17 +32,54 @@ class Contact extends Component {
   }
 
   render () {
-    const { contact } = this.props;
+    const { contact, classes } = this.props;
     return (
-      <>
-        <h4 className="m-none">{contact.name}</h4>
-        <ul className="mb-sm">
+      <ContactContainer>
+        <Name>{contact.name}</Name>
+        <IconButton classes={{ root: classes.iconButtonSmall }}>
+          <ArrowDropDown />
+        </IconButton>
+        <CloseIcon>
+          <IconButton classes={{ root: classes.iconButton }}>
+            <Delete />
+          </IconButton>
+        </CloseIcon>
+        {/* <ul className="mb-sm">
           <li>{contact.email}</li>
           <li>{contact.phone}</li>
-        </ul>
-      </>
+        </ul> */}
+      </ContactContainer>
     );
   }
 }
 
-export default Contact;
+const styles = () => ({
+  iconButton: {
+    padding: 10,
+  },
+  iconButtonSmall: {
+    padding: 2,
+    marginLeft: 4,
+  },
+});
+
+const ContactContainer = styled.div`
+  display: flex;
+  border: 1px solid #ddd;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 16px;
+  margin: 12px 0;
+`;
+
+const Name = styled.h4`
+  font-weight: bold;
+  margin: 0;
+`;
+
+const CloseIcon = styled.div`
+  margin-left: auto;
+  font-weight: 10px;
+`;
+
+export default withStyles(styles)(Contact);
