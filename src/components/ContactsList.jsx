@@ -11,23 +11,30 @@ class ContactsList extends Component {
   constructor (props) {
     super(props);
     this.state = {
-
+      contacts: [],
     };
   }
 
   componentDidMount () {
-
+    this.setState({ contacts: this.props.contacts });
   }
 
-  shouldComponentUpdate () {
+  shouldComponentUpdate (nextState, nextProps) {
+    if (this.state.contacts !== nextState.contacts) {
+      return true;
+    }
+    return false;
+  }
 
+  removeContact (id) {
+    this.state.contacts.filter(contact => contact.id !== id);
   }
 
   render () {
-    const { contacts } = this.props;
+    const { contacts } = this.state;
     return (
       <div>
-        {contacts.map(contact => <Contact contact={contact} />)}
+        {contacts ? contacts.map(contact => <Contact contact={contact} removeContact={this.removeContact} />) : null}
       </div>
     );
   }

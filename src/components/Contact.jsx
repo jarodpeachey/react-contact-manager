@@ -10,6 +10,7 @@ class Contact extends Component {
   static propTypes = {
     contact: PropTypes.object,
     classes: PropTypes.object,
+    removeContact: PropTypes.func,
   };
 
   constructor (props) {
@@ -40,7 +41,7 @@ class Contact extends Component {
           <ArrowDropDown />
         </IconButton>
         <CloseIcon>
-          <IconButton classes={{ root: classes.iconButton }}>
+          <IconButton onClick={this.props.removeContact(contact.id)} classes={{ root: classes.iconButton }}>
             <Delete />
           </IconButton>
         </CloseIcon>
