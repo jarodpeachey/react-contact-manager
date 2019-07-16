@@ -25,16 +25,9 @@ class Header extends Component {
   render () {
     return (
       <Wrapper>
-        <div className="container py-none">
-          <div className="navbar-content">
-            <div className="navbar-left">
-              <h3 className="m-0">
-                Brand Name
-              </h3>
-            </div>
-            <div className="navbar-right">
-              Menu
-            </div>
+        <div className="container py-xxs">
+          <div className="center-text">
+            <h2>Contact Manager</h2>
           </div>
         </div>
       </Wrapper>
@@ -45,6 +38,7 @@ class Header extends Component {
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.main};
   color: white;
+  box-shadow: 0 1px 10px 2px #999;
 `;
 
 export default Header;
