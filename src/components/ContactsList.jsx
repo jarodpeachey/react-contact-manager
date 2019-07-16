@@ -26,19 +26,14 @@ class ContactsList extends Component {
     return false;
   }
 
-  removeContact (id) {
-    this.state.contacts.filter(contact => contact.id !== id);
-  }
-
   render () {
     const { contacts } = this.state;
     return (
       <div>
-        {contacts ? contacts.map(contact => <Contact contact={contact} removeContact={this.removeContact} />) : null}
+        {contacts ? contacts.map(contact => <Contact contact={contact} />) : null}
       </div>
     );
   }
 }
 
 export default ContactsList;
-
