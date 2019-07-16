@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import ContactsList from '../ContactsList';
+import ContactsList from '../Contacts/ContactsList';
 
 class Main extends Component {
   static propTypes = {
