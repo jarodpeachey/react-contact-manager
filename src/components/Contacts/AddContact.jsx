@@ -71,8 +71,8 @@ class AddContact extends Component {
   onSubmitForm (e) {
     e.preventDefault();
 
-    if (this.state.emailInputError || this.state.phoneInputError) {
-      alert('Please fix all the errors');
+    if (this.state.emailInputError || this.state.phoneInputError || this.state.emailInputValue === '' || this.state.nameInputValue === '' || this.state.phoneInputValue === '') {
+      alert('Please fill in all the fields correctly');
     } else {
       const { emailInputValue, phoneInputValue, nameInputValue } = this.state;
       this.props.addContactItem(nameInputValue, emailInputValue, phoneInputValue);

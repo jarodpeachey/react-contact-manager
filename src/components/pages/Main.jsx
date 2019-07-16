@@ -45,7 +45,7 @@ class Main extends Component {
   }
 
   addContactItem (name, email, phone) {
-    const contactsArray = this.state.contacts;
+    const contactsArray = this.state.contacts ? this.state.contacs : [];
     const newContactsArray = [];
     const id = contactsArray.length + 1;
 
@@ -66,23 +66,28 @@ class Main extends Component {
   }
 
   removeContactItem (id) {
-    const { contacts } = this.state;
+    const contactsArray = this.state.contacts;
+    const newContactsArray = [];
 
-    const newContacts = [];
-
-    contacts.forEach((contactItem) => {
+    contactsArray.forEach((contactItem) => {
       if (contactItem.id !== id) {
-        newContacts.push(contactItem);
+        newContactsArray.push(contactItem);
       }
     });
 
-    this.setState({ contacts: newContacts });
-
-    console.log('New contacts:', newContacts);
+    if (newContactsArray.length) {
+      this.setState({ contacts: newContactsArray });
+    } else {
+      this.setState({ contacts: null });
+    }
   }
 
   render () {
     const { contacts } = this.state;
+
+    if (!contacts) {
+      console.log('Empty contacts')
+    }
 
     return (
       <div>
@@ -95,14 +100,18 @@ class Main extends Component {
               <AddContact addContactItem={this.addContactItem} />
             </CardContent>
           </Card>
-          <Card className="p-sm">
-            <CardContent>
-              <Heading>
-                <h3 className="m-none">Contacts</h3>
-              </Heading>
-              <ContactsList removeContactItem={this.removeContactItem} contacts={contacts} />
-            </CardContent>
-          </Card>
+          {!contacts ? (
+            null
+          ) : (
+            <Card className="p-sm">
+              <CardContent>
+                <Heading>
+                  <h3 className="m-none">Contacts</h3>
+                </Heading>
+                <ContactsList removeContactItem={this.removeContactItem} contacts={contacts} />
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     );
