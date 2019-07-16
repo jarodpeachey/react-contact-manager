@@ -13,6 +13,8 @@ class ContactsList extends Component {
     this.state = {
       contacts: [],
     };
+
+    this.removeContact = this.removeContact.bind(this);
   }
 
   componentDidMount () {
@@ -26,11 +28,19 @@ class ContactsList extends Component {
     return false;
   }
 
+  removeContact (id) {
+    const { contacts } = this.state;
+
+    const newContacts = contacts.filter(contact => contact.id !== id);
+
+    this.setState({ contacts: newContacts });
+  }
+
   render () {
     const { contacts } = this.state;
     return (
       <div>
-        {contacts ? contacts.map(contact => <Contact contact={contact} />) : null}
+        {contacts ? contacts.map(contact => <Contact contact={contact} removeContact={this.removeContact} />) : null}
       </div>
     );
   }
