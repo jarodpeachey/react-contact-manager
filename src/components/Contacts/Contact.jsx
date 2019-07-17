@@ -65,9 +65,9 @@ class Contact extends Component {
                   </IconButton>
                 </CloseIcon>
               </FlexContainer>
-              <Seperator />
             </ContactContainer>
             <InformationWrapper>
+              <Seperator />
               <CollectionItem>
                 <Mail className="mr-sm" />
                 {contact.email}
@@ -110,10 +110,12 @@ const styles = () => ({
 
 const slideDown = keyframes`
   0% {
-    transform: translateY(-45%);
+    height: 20px;
+    overflow: hidden;
   }
   100% {
-    transform: translateY(0%);
+    height: auto;
+    overflow: none;
   }
 `;
 
@@ -152,7 +154,7 @@ const CloseIcon = styled.div`
 const InformationWrapper = styled.div`
   border: 1px solid #ddd;
   border-top: none;
-  padding: 0 16px;
+  padding: 8px 16px;
   padding-top: 8px;
   animation: ${slideDown} .4s ease-in-out;
   margin-bottom: 0;
@@ -166,7 +168,7 @@ const Seperator = styled.div`
   content: "";
   background: ${({ theme }) => theme.colors.main};
   width: 100%;
-  margin: 12px auto 0;
+  margin: -8px auto 16px;
 `;
 
 const CollectionItem = styled.div`

@@ -25,6 +25,24 @@ class Main extends Component {
           email: 'jdoe@mail.com',
           phone: '111-111-5551',
         },
+        {
+          id: 2,
+          name: 'John Doe',
+          email: 'jdoe@mail.com',
+          phone: '111-111-5551',
+        },
+        {
+          id: 3,
+          name: 'John Doe',
+          email: 'jdoe@mail.com',
+          phone: '111-111-5551',
+        },
+        {
+          id: 4,
+          name: 'John Doe',
+          email: 'jdoe@mail.com',
+          phone: '111-111-5551',
+        },
       ],
     };
 
