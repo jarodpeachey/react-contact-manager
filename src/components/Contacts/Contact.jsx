@@ -114,7 +114,7 @@ const slideDown = keyframes`
     overflow: hidden;
   }
   100% {
-    height: auto;
+    height: 160px;
     overflow: none;
   }
 `;
