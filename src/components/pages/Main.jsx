@@ -54,7 +54,7 @@ class Main extends Component {
 
   }
 
-  shouldComponentUpdate (nextState, nextProps) {
+  shouldComponentUpdate (nextState) {
     if (this.state.contacts !== nextState.contacts) {
       console.log('re-render');
       return true;
@@ -104,7 +104,7 @@ class Main extends Component {
     const { contacts } = this.state;
 
     if (!contacts) {
-      console.log('Empty contacts')
+      console.log('Empty contacts');
     }
 
     return (

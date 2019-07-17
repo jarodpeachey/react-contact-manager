@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Paper, FormControl, TextField, withStyles, Button } from '@material-ui/core';
+// import styled from 'styled-components';
+import { FormControl, TextField, withStyles, Button } from '@material-ui/core';
 
 class AddContact extends Component {
   static propTypes = {
@@ -70,7 +70,7 @@ class AddContact extends Component {
     }
   }
 
-  onSubmitForm (e) {
+  onSubmitForm () {
     if (this.state.emailInputError || this.state.phoneInputError || this.state.emailInputValue === '' || this.state.nameInputValue === '' || this.state.phoneInputValue === '') {
       alert('Please fill in all the fields correctly');
     } else {
