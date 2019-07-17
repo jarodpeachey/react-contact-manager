@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import Delete from '@material-ui/icons/Delete';
+import Mail from '@material-ui/icons/Mail';
+import Phone from '@material-ui/icons/Phone';
 import { withStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -16,39 +19,81 @@ class Contact extends Component {
   constructor (props) {
     super(props);
     this.state = {
-
+      showInformation: false,
     };
+
+    this.toggleContactInformation = this.toggleContactInformation.bind(this);
   }
 
   componentDidMount () {
 
   }
 
-  shouldComponentUpdate (nextProps) {
+  shouldComponentUpdate (nextProps, nextState) {
     if (this.props.contact !== nextProps.contact) {
+      return true;
+    }
+    if (this.state.showInformation !== nextState.showInformation) {
       return true;
     }
     return false;
   }
 
+  toggleContactInformation () {
+    const informationBool = this.state.showInformation;
+
+    this.setState({ showInformation: !informationBool });
+  }
+
   render () {
     const { contact, classes } = this.props;
+    const { showInformation } = this.state;
+
     return (
-      <ContactContainer>
-        <Name>{contact.name}</Name>
-        <IconButton classes={{ root: classes.iconButtonSmall }}>
-          <ArrowDropDown />
-        </IconButton>
-        <CloseIcon>
-          <IconButton onClick={() => { this.props.removeContactItem(contact.id); }} classes={{ root: classes.iconButton }}>
-            <Delete />
-          </IconButton>
-        </CloseIcon>
-        {/* <ul className="mb-sm">
-          <li>{contact.email}</li>
-          <li>{contact.phone}</li>
-        </ul> */}
-      </ContactContainer>
+      <>
+        {showInformation ? (
+          <>
+            <ContactContainer>
+              <FlexContainer>
+                <Name>{contact.name}</Name>
+                <IconButton onClick={this.toggleContactInformation} classes={{ root: classes.iconButtonSmall }}>
+                  <ArrowDropUp />
+                </IconButton>
+                <CloseIcon>
+                  <IconButton onClick={() => { this.props.removeContactItem(contact.id); }} classes={{ root: classes.iconButton }}>
+                    <Delete />
+                  </IconButton>
+                </CloseIcon>
+              </FlexContainer>
+              <Seperator />
+            </ContactContainer>
+            <InformationWrapper>
+              <CollectionItem>
+                <Mail className="mr-sm" />
+                {contact.email}
+              </CollectionItem>
+              <CollectionItem>
+                <Phone className="mr-sm" />
+                {contact.phone}
+              </CollectionItem>
+            </InformationWrapper>
+          </>
+        ) : (
+          <ContactContainerOutlined>
+            <FlexContainer>
+              <Name>{contact.name}</Name>
+              <IconButton onClick={this.toggleContactInformation} classes={{ root: classes.iconButtonSmall }}>
+                <ArrowDropDown />
+              </IconButton>
+              <CloseIcon>
+                <IconButton onClick={() => { this.props.removeContactItem(contact.id); }} classes={{ root: classes.iconButton }}>
+                  <Delete />
+                </IconButton>
+              </CloseIcon>
+            </FlexContainer>
+          </ContactContainerOutlined>
+        )}
+      </>
     );
   }
 }
@@ -63,13 +108,35 @@ const styles = () => ({
   },
 });
 
+const slideDown = keyframes`
+  0% {
+    transform: translateY(-45%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+`;
+
 const ContactContainer = styled.div`
-  display: flex;
   border: 1px solid #ddd;
-  align-items: center;
-  justify-content: flex-start;
+  border-bottom: none;
+  padding: 8px 16px;
+  margin: 12px 0 0;
+  position: relative;
+  z-index: 99;
+  background: white;
+`;
+
+const ContactContainerOutlined = styled.div`
+  border: 1px solid #ddd;
   padding: 8px 16px;
   margin: 12px 0;
+`;
+
+const FlexContainer = styled.div`
+  align-items: center;
+  justify-content: flex-start;
+  display: flex;
 `;
 
 const Name = styled.h4`
@@ -80,6 +147,34 @@ const Name = styled.h4`
 const CloseIcon = styled.div`
   margin-left: auto;
   font-weight: 10px;
+`;
+
+const InformationWrapper = styled.div`
+  border: 1px solid #ddd;
+  border-top: none;
+  padding: 0 16px;
+  padding-top: 8px;
+  animation: ${slideDown} .4s ease-in-out;
+  margin-bottom: 0;
+  width: 100%;
+  z-index: -2;
+`;
+
+const Seperator = styled.div`
+  height: 2px;
+  display: block;
+  content: "";
+  background: ${({ theme }) => theme.colors.main};
+  width: 100%;
+  margin: 12px auto 0;
+`;
+
+const CollectionItem = styled.div`
+  background: #f7f7f7;
+  padding: 16px;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
 `;
 
 export default withStyles(styles)(Contact);
