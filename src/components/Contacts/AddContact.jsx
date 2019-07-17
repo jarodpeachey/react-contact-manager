@@ -48,19 +48,21 @@ class AddContact extends Component {
     if (e.target.id === 'name') {
       this.setState({ nameInputValue: e.target.value });
     } else if (e.target.id === 'email') {
+      this.setState({ emailInputValue: e.target.value });
+
       const regex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
 
       if (regex.test(e.target.value)) {
-        this.setState({ emailInputValue: e.target.value });
         this.setState({ emailInputError: false });
       } else {
         this.setState({ emailInputError: true });
       }
     } else if (e.target.id === 'phone') {
+      this.setState({ phoneInputValue: e.target.value });
+
       const regex = /^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/;
 
       if (regex.test(e.target.value)) {
-        this.setState({ phoneInputValue: e.target.value });
         this.setState({ phoneInputError: false });
       } else {
         this.setState({ phoneInputError: true });
@@ -69,23 +71,25 @@ class AddContact extends Component {
   }
 
   onSubmitForm (e) {
-    e.preventDefault();
-
     if (this.state.emailInputError || this.state.phoneInputError || this.state.emailInputValue === '' || this.state.nameInputValue === '' || this.state.phoneInputValue === '') {
       alert('Please fill in all the fields correctly');
     } else {
       const { emailInputValue, phoneInputValue, nameInputValue } = this.state;
       this.props.addContactItem(nameInputValue, emailInputValue, phoneInputValue);
+
+      this.setState({ emailInputValue: '', phoneInputValue: '', nameInputValue: '' });
     }
   }
 
   render () {
     const { classes } = this.props;
+    const { nameInputValue, emailInputValue, phoneInputValue } = this.state;
 
     return (
       <FormControl fullWidth>
         <TextField
           classes={{ root: classes.textField }}
+          value={nameInputValue}
           id="name"
           label="Name"
           fullWidth
@@ -95,6 +99,7 @@ class AddContact extends Component {
         />
         <TextField
           classes={{ root: classes.textField }}
+          value={emailInputValue}
           id="email"
           label="Email"
           fullWidth
@@ -105,6 +110,7 @@ class AddContact extends Component {
         />
         <TextField
           classes={{ root: classes.textField }}
+          value={phoneInputValue}
           id="phone"
           label="Phone"
           fullWidth

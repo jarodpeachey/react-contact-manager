@@ -130,14 +130,14 @@ const slideDown = keyframes`
     height: 2px;
   }
   100% {
-    height: 160px;
+    height: 155px;
     overflow: none;
   }
 `;
 
 const slideUp = keyframes`
   0% {
-    height: 160px;
+    height: 155px;
     overflow: none;
   }
   100% {
