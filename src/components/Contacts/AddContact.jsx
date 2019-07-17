@@ -83,7 +83,7 @@ class AddContact extends Component {
     const { classes } = this.props;
 
     return (
-      <FormControl fullWidth className="mt-sm">
+      <FormControl fullWidth>
         <TextField
           classes={{ root: classes.textField }}
           id="name"
@@ -116,7 +116,7 @@ class AddContact extends Component {
         <Button
           color="primary"
           variant="contained"
-          className="mx-none"
+          className="m-none"
           classes={{ root: classes.button }}
           onClick={this.onSubmitForm}
         >
@@ -129,7 +129,7 @@ class AddContact extends Component {
 
 const styles = () => ({
   textField: {
-    margin: '8px 0',
+    margin: '0 0 16px',
   },
   button: {
     height: 48.4,

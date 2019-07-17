@@ -79,19 +79,32 @@ class Contact extends Component {
             </InformationWrapper>
           </>
         ) : (
-          <ContactContainerOutlined>
-            <FlexContainer>
-              <Name>{contact.name}</Name>
-              <IconButton onClick={this.toggleContactInformation} classes={{ root: classes.iconButtonSmall }}>
-                <ArrowDropDown />
-              </IconButton>
-              <CloseIcon>
-                <IconButton onClick={() => { this.props.removeContactItem(contact.id); }} classes={{ root: classes.iconButton }}>
-                  <Delete />
+          <>
+            <ContactContainerOutlined>
+              <FlexContainer>
+                <Name>{contact.name}</Name>
+                <IconButton onClick={this.toggleContactInformation} classes={{ root: classes.iconButtonSmall }}>
+                  <ArrowDropDown />
                 </IconButton>
-              </CloseIcon>
-            </FlexContainer>
-          </ContactContainerOutlined>
+                <CloseIcon>
+                  <IconButton onClick={() => { this.props.removeContactItem(contact.id); }} classes={{ root: classes.iconButton }}>
+                    <Delete />
+                  </IconButton>
+                </CloseIcon>
+              </FlexContainer>
+            </ContactContainerOutlined>
+            <InformationWrapperGhost>
+              <Seperator />
+              <CollectionItem>
+                <Mail className="mr-sm" />
+                {contact.email}
+              </CollectionItem>
+              <CollectionItem>
+                <Phone className="mr-sm" />
+                {contact.phone}
+              </CollectionItem>
+            </InformationWrapperGhost>
+          </>
         )}
       </>
     );
@@ -110,12 +123,30 @@ const styles = () => ({
 
 const slideDown = keyframes`
   0% {
-    height: 20px;
+    height: 0px;
     overflow: hidden;
+  }
+  2% {
+    height: 2px;
   }
   100% {
     height: 160px;
     overflow: none;
+  }
+`;
+
+const slideUp = keyframes`
+  0% {
+    height: 160px;
+    overflow: none;
+  }
+  100% {
+    height: 0px;
+    overflow: hidden;
+    padding-bottom: 0;
+    padding-top: 0;
+    margin-bottom: 0;
+    margin-top: 0;
   }
 `;
 
@@ -131,8 +162,9 @@ const ContactContainer = styled.div`
 
 const ContactContainerOutlined = styled.div`
   border: 1px solid #ddd;
+  border-bottom: none;
   padding: 8px 16px;
-  margin: 12px 0;
+  margin: 12px 0 0;
 `;
 
 const FlexContainer = styled.div`
@@ -156,7 +188,24 @@ const InformationWrapper = styled.div`
   border-top: none;
   padding: 8px 16px;
   padding-top: 8px;
-  animation: ${slideDown} .4s ease-in-out;
+  animation-name: ${slideDown};
+  animation-duration: .4s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  margin-bottom: 0;
+  width: 100%;
+  z-index: -2;
+`;
+
+const InformationWrapperGhost = styled.div`
+  border: 1px solid #ddd;
+  border-top: none;
+  padding: 8px 16px;
+  padding-top: 8px;
+  animation-name: ${slideUp};
+  animation-duration: .4s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
   margin-bottom: 0;
   width: 100%;
   z-index: -2;

@@ -137,7 +137,13 @@ class Main extends Component {
 }
 
 const Heading = styled.div`
+  width: 100%;
+  background: #f7f7f7;
+  padding: 24px 0;
+  margin-bottom: 16px;
+  text-align: center;
   color: ${({ theme }) => theme.colors.main};
+  font-size: 18px;
 `;
 
 export default Main;
