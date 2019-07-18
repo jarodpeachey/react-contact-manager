@@ -19,6 +19,7 @@ class Contact extends Component {
   constructor (props) {
     super(props);
     this.state = {
+      contact: {},
       showInformation: false,
       hasBeenOpened: false,
     };
@@ -27,11 +28,17 @@ class Contact extends Component {
   }
 
   componentDidMount () {
+    this.setState({ contact: this.props.contact });
+  }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.contact !== nextProps.contact) {
+      this.setState({ contact: nextProps.contact });
+    }
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    if (this.props.contact !== nextProps.contact) {
+    if (this.state.contact !== nextState.contact) {
       return true;
     }
     if (this.state.showInformation !== nextState.showInformation) {
@@ -43,16 +50,24 @@ class Contact extends Component {
   toggleContactInformation () {
     const informationBool = this.state.showInformation;
 
-    this.setState({ showInformation: !informationBool, hasBeenOpened: true });
+    const { contact } = this.state;
+
+    this.setState({ showInformation: informationBool !== null ? contact.id : null, hasBeenOpened: true });
+  }
+
+  removeContactItem () {
+    this.setState({ showInformation: false, hasBeenOpened: false, contact: null });
+
+    this.props.removeContactItem(this.props.contact.id);
   }
 
   render () {
-    const { contact, classes } = this.props;
-    const { showInformation, hasBeenOpened } = this.state;
+    const { classes } = this.props;
+    const { contact, showInformation, hasBeenOpened } = this.state;
 
     return (
       <>
-        {showInformation ? (
+        {showInformation === contact.id ? (
           <>
             <ContactContainer>
               <FlexContainer>
@@ -88,7 +103,7 @@ class Contact extends Component {
                   <ArrowDropDown />
                 </IconButton>
                 <CloseIcon>
-                  <IconButton onClick={() => { this.props.removeContactItem(contact.id); }} classes={{ root: classes.iconButton }}>
+                  <IconButton onClick={() => { this.removeContactItem(contact.id); }} classes={{ root: classes.iconButton }}>
                     <Delete />
                   </IconButton>
                 </CloseIcon>
