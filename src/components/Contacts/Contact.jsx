@@ -20,6 +20,7 @@ class Contact extends Component {
     super(props);
     this.state = {
       showInformation: false,
+      hasBeenOpened: false,
     };
 
     this.toggleContactInformation = this.toggleContactInformation.bind(this);
@@ -42,12 +43,12 @@ class Contact extends Component {
   toggleContactInformation () {
     const informationBool = this.state.showInformation;
 
-    this.setState({ showInformation: !informationBool });
+    this.setState({ showInformation: !informationBool, hasBeenOpened: true });
   }
 
   render () {
     const { contact, classes } = this.props;
-    const { showInformation } = this.state;
+    const { showInformation, hasBeenOpened } = this.state;
 
     return (
       <>
@@ -93,17 +94,19 @@ class Contact extends Component {
                 </CloseIcon>
               </FlexContainer>
             </ContactContainerOutlined>
-            <InformationWrapperGhost>
-              <Seperator />
-              <CollectionItem>
-                <Mail className="mr-sm" />
-                {contact.email}
-              </CollectionItem>
-              <CollectionItem>
-                <Phone className="mr-sm" />
-                {contact.phone}
-              </CollectionItem>
-            </InformationWrapperGhost>
+            {hasBeenOpened ? (
+              <InformationWrapperGhost>
+                <Seperator />
+                <CollectionItem>
+                  <Mail className="mr-sm" />
+                  {contact.email}
+                </CollectionItem>
+                <CollectionItem>
+                  <Phone className="mr-sm" />
+                  {contact.phone}
+                </CollectionItem>
+              </InformationWrapperGhost>
+            ) : <Outline />}
           </>
         )}
       </>
@@ -218,6 +221,15 @@ const Seperator = styled.div`
   background: ${({ theme }) => theme.colors.main};
   width: 100%;
   margin: -8px auto 16px;
+`;
+
+const Outline = styled.div`
+  width: 100%;
+  height: 1px;
+  border-top: 1px solid #ddd;
+  margin: 0;
+  padding; 0;
+  z-index: 999;
 `;
 
 const CollectionItem = styled.div`

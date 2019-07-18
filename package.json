@@ -2,13 +2,14 @@
   "name": "react-starter",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://jarodpeachey.github.io/react-contact-manager",
+  "homepage": "https://jarodpeachey.github.io/react-contact-manager/",
   "engines": {
     "node": "10.15.1"
   },
   "main": "index.js",
   "scripts": {
-    "deploy": "npm run build&&gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "webpack --mode production",
     "start": "webpack --mode development && webpack-dev-server --mode development --open",
     "heroku-postbuild": "webpack -p",
@@ -47,7 +48,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
-    "react-router": "^3.2.1",
+    "react-router-dom": "^4.3.1",
     "styled-components": "^4.1.3"
   }
 }
