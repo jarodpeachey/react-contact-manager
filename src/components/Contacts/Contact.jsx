@@ -20,7 +20,7 @@ class Contact extends Component {
     super(props);
     this.state = {
       contact: {},
-      showInformation: false,
+      showInformation: null,
       hasBeenOpened: false,
     };
 
@@ -52,7 +52,7 @@ class Contact extends Component {
 
     const { contact } = this.state;
 
-    this.setState({ showInformation: informationBool !== null ? contact.id : null, hasBeenOpened: true });
+    this.setState({ showInformation: informationBool === null ? contact.id : null, hasBeenOpened: true });
   }
 
   removeContactItem () {
@@ -71,7 +71,12 @@ class Contact extends Component {
           <>
             <ContactContainer>
               <FlexContainer>
-                <Name>{contact.name}</Name>
+                <Name>
+                  {contact.name}
+                  (
+                  {contact.id}
+                  )
+                </Name>
                 <IconButton onClick={this.toggleContactInformation} classes={{ root: classes.iconButtonSmall }}>
                   <ArrowDropUp />
                 </IconButton>
@@ -98,7 +103,12 @@ class Contact extends Component {
           <>
             <ContactContainerOutlined>
               <FlexContainer>
-                <Name>{contact.name}</Name>
+                <Name>
+                  {contact.name}
+                  (
+                  {contact.id}
+                  )
+                </Name>
                 <IconButton onClick={this.toggleContactInformation} classes={{ root: classes.iconButtonSmall }}>
                   <ArrowDropDown />
                 </IconButton>

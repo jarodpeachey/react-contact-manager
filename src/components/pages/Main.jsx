@@ -59,7 +59,7 @@ class Main extends Component {
   addContactItem (name, email, phone) {
     const contactsArray = this.state.contacts ? this.state.contacts : [];
     const newContactsArray = [];
-    const id = contactsArray.length + 1;
+    const id = contactsArray[contactsArray.length].id + 1;
 
     const newContact = {
       id,
