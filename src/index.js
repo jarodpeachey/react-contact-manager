@@ -2,7 +2,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import {
-  browserHistory, Router,
+  browserHistory, BrowserRouter,
 } from 'react-router';
 // import { useScroll } from 'react-router-scroll';
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -15,11 +15,11 @@ function startApp () {
   render(
     <MuiThemeProvider theme={muiTheme}>
       <ThemeProvider theme={styledTheme}>
-        <Router
+        <BrowserRouter
           history={browserHistory}
         >
           {routes()}
-        </Router>
+        </BrowserRouter>
       </ThemeProvider>
     </MuiThemeProvider>, document.getElementById('app'),
   );
