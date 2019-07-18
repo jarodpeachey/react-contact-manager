@@ -7,7 +7,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
-    publicPath: '/react-contact-manager/',
+    publicPath: '/react-contact-manager/build/',
   },
   module: {
     rules: [
