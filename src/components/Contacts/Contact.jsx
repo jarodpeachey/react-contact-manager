@@ -56,7 +56,7 @@ class Contact extends Component {
   }
 
   removeContactItem () {
-    this.setState({ showInformation: false, hasBeenOpened: false, contact: null });
+    this.setState({ showInformation: null, hasBeenOpened: false, contact: null });
 
     this.props.removeContactItem(this.props.contact.id);
   }
