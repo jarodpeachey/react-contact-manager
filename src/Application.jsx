@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
@@ -39,7 +39,7 @@ class Application extends Component {
             <div className="app">
               {header}
               <Switch>
-                <Route exact path="/react-contact-manager" component={Main} />
+                <Route exact path="/" component={Main} />
               </Switch>
             </div>
           </Router>
