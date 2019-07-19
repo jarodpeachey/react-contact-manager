@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { FormControl, TextField, withStyles, Button } from '@material-ui/core';
+import { addContact } from '../../actions/contactActions';
 
 class AddContact extends Component {
   static propTypes = {
     classes: PropTypes.object,
-    addContactItem: PropTypes.func,
+    addContact: PropTypes.func,
+    contacts: PropTypes.array,
   };
 
   constructor (props) {
@@ -74,8 +77,11 @@ class AddContact extends Component {
     if (this.state.emailInputError || this.state.phoneInputError || this.state.emailInputValue === '' || this.state.nameInputValue === '' || this.state.phoneInputValue === '') {
       alert('Please fill in all the fields correctly');
     } else {
+      const id = this.props.contacts[this.props.contacts.length - 1].id + 1;
+
       const { emailInputValue, phoneInputValue, nameInputValue } = this.state;
-      this.props.addContactItem(nameInputValue, emailInputValue, phoneInputValue);
+
+      this.props.addContact(id, nameInputValue, emailInputValue, phoneInputValue);
 
       this.setState({ emailInputValue: '', phoneInputValue: '', nameInputValue: '' });
     }
@@ -142,4 +148,4 @@ const styles = () => ({
   },
 });
 
-export default withStyles(styles)(AddContact);
+export default connect(null, { addContact })(withStyles(styles)(AddContact));

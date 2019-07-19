@@ -18,15 +18,13 @@ class Main extends Component {
     this.state = {
 
     };
-
-    this.addContactItem = this.addContactItem.bind(this);
   }
 
   componentDidMount () {
     this.props.getContacts();
   }
 
-  componentWillReceiveProps () {
+  componentWillReceiveProps (nextProps) {
     this.props.getContacts();
   }
 
@@ -35,27 +33,6 @@ class Main extends Component {
       return true;
     }
     return false;
-  }
-
-  addContactItem (name, email, phone) {
-    const contactsArray = this.state.contacts ? this.state.contacts : [];
-    const newContactsArray = [];
-    const id = contactsArray[contactsArray.length - 1].id + 1;
-
-    const newContact = {
-      id,
-      name,
-      email,
-      phone,
-    };
-
-    contactsArray.forEach((contactItem) => {
-      newContactsArray.push(contactItem);
-    });
-
-    newContactsArray.push(newContact);
-
-    this.setState({ contacts: newContactsArray });
   }
 
   render () {
@@ -73,7 +50,7 @@ class Main extends Component {
               <Heading>
                 <h3 className="m-none">Add Contact</h3>
               </Heading>
-              <AddContact addContactItem={this.addContactItem} />
+              <AddContact contacts={contacts} />
             </CardContent>
           </Card>
           {!contacts ? (
@@ -82,7 +59,7 @@ class Main extends Component {
             <Card className="p-sm">
               <CardContent>
                 <Heading>
-                  <h3 className="m-none">Contacts</h3>
+                  <h3 className="m-none">Contacts List</h3>
                 </Heading>
                 <ContactsList contacts={contacts} />
               </CardContent>
