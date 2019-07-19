@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
@@ -8,12 +9,13 @@ import Mail from '@material-ui/icons/Mail';
 import Phone from '@material-ui/icons/Phone';
 import { withStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
+import { deleteContact } from '../../actions/contactActions';
 
 class Contact extends Component {
   static propTypes = {
     contact: PropTypes.object,
     classes: PropTypes.object,
-    removeContactItem: PropTypes.func,
+    deleteContact: PropTypes.func,
   };
 
   constructor (props) {
@@ -25,6 +27,7 @@ class Contact extends Component {
     };
 
     this.toggleContactInformation = this.toggleContactInformation.bind(this);
+    this.removeContactItem = this.removeContactItem.bind(this);
   }
 
   componentDidMount () {
@@ -56,9 +59,9 @@ class Contact extends Component {
   }
 
   removeContactItem () {
-    this.setState({ showInformation: null, hasBeenOpened: false, contact: null });
+    const { contact } = this.state;
 
-    this.props.removeContactItem(this.props.contact.id);
+    this.props.deleteContact(contact.id);
   }
 
   render () {
@@ -81,7 +84,7 @@ class Contact extends Component {
                   <ArrowDropUp />
                 </IconButton>
                 <CloseIcon>
-                  <IconButton onClick={() => { this.props.removeContactItem(contact.id); }} classes={{ root: classes.iconButton }}>
+                  <IconButton onClick={this.removeContactItem} classes={{ root: classes.iconButton }}>
                     <Delete />
                   </IconButton>
                 </CloseIcon>
@@ -113,7 +116,7 @@ class Contact extends Component {
                   <ArrowDropDown />
                 </IconButton>
                 <CloseIcon>
-                  <IconButton onClick={() => { this.removeContactItem(contact.id); }} classes={{ root: classes.iconButton }}>
+                  <IconButton onClick={this.removeContactItem} classes={{ root: classes.iconButton }}>
                     <Delete />
                   </IconButton>
                 </CloseIcon>
@@ -265,4 +268,4 @@ const CollectionItem = styled.div`
   align-items: center;
 `;
 
-export default withStyles(styles)(Contact);
+export default connect(null, { deleteContact })(withStyles(styles)(Contact));

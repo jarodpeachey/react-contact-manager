@@ -6,7 +6,6 @@ import Contact from './Contact';
 class ContactsList extends Component {
   static propTypes = {
     contacts: PropTypes.array,
-    removeContactItem: PropTypes.func,
   };
 
   constructor (props) {
@@ -38,7 +37,7 @@ class ContactsList extends Component {
 
     return (
       <>
-        {contacts ? contacts.map(contact => <Contact contact={contact} removeContactItem={this.props.removeContactItem} />) : null}
+        {contacts ? contacts.map(contact => <Contact contact={contact} />) : null}
       </>
     );
   }

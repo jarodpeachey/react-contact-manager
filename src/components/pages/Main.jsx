@@ -1,56 +1,37 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import { Card, CardContent } from '@material-ui/core';
 import ContactsList from '../Contacts/ContactsList';
 import AddContact from '../Contacts/AddContact';
+import { getContacts } from '../../actions/contactActions';
 
 class Main extends Component {
   static propTypes = {
-
+    contacts: PropTypes.array,
+    getContacts: PropTypes.func,
   };
 
   constructor (props) {
     super(props);
     this.state = {
-      contacts: [
-        {
-          id: 0,
-          name: 'Contact 0',
-          email: 'contact0@mail.com',
-          phone: '000-000-0000',
-        },
-        {
-          id: 1,
-          name: 'Contact 1',
-          email: 'contact1@mail.com',
-          phone: '111-111-1111',
-        },
-        {
-          id: 2,
-          name: 'Contact 2',
-          email: 'contact2@mail.com',
-          phone: '222-222-2222',
-        },
-        {
-          id: 3,
-          name: 'Contact 3',
-          email: 'contact3@mail.com',
-          phone: '333-333-3333',
-        },
-      ],
+
     };
 
-    this.removeContactItem = this.removeContactItem.bind(this);
     this.addContactItem = this.addContactItem.bind(this);
   }
 
   componentDidMount () {
-
+    this.props.getContacts();
   }
 
-  shouldComponentUpdate (nextState) {
-    if (this.state.contacts !== nextState.contacts) {
-      console.log('re-render');
+  componentWillReceiveProps () {
+    this.props.getContacts();
+  }
+
+  shouldComponentUpdate (nextProps) {
+    if (this.props.contacts !== nextProps.contacts) {
       return true;
     }
     return false;
@@ -77,25 +58,8 @@ class Main extends Component {
     this.setState({ contacts: newContactsArray });
   }
 
-  removeContactItem (id) {
-    const contactsArray = this.state.contacts;
-    const newContactsArray = [];
-
-    contactsArray.forEach((contactItem) => {
-      if (contactItem.id !== id) {
-        newContactsArray.push(contactItem);
-      }
-    });
-
-    if (newContactsArray.length) {
-      this.setState({ contacts: newContactsArray });
-    } else {
-      this.setState({ contacts: null });
-    }
-  }
-
   render () {
-    const { contacts } = this.state;
+    const { contacts } = this.props;
 
     if (!contacts) {
       console.log('Empty contacts');
@@ -120,7 +84,7 @@ class Main extends Component {
                 <Heading>
                   <h3 className="m-none">Contacts</h3>
                 </Heading>
-                <ContactsList removeContactItem={this.removeContactItem} contacts={contacts} />
+                <ContactsList contacts={contacts} />
               </CardContent>
             </Card>
           )}
@@ -140,4 +104,8 @@ const Heading = styled.div`
   font-size: 18px;
 `;
 
-export default Main;
+const mapStateToProps = state => ({
+  contacts: state.contacts.contacts,
+});
+
+export default connect(mapStateToProps, { getContacts })(Main);
