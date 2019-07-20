@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { FormControl, TextField, withStyles, Button } from '@material-ui/core';
 import { addContact } from '../../actions/contactActions';
+import { sortByContactId } from '../../utils/arrayFormat';
 
 class AddContact extends Component {
   static propTypes = {
@@ -77,7 +78,8 @@ class AddContact extends Component {
     if (this.state.emailInputError || this.state.phoneInputError || this.state.emailInputValue === '' || this.state.nameInputValue === '' || this.state.phoneInputValue === '') {
       alert('Please fill in all the fields correctly');
     } else {
-      const id = this.props.contacts[this.props.contacts.length - 1].id + 1;
+      const sortedContacts = sortByContactId(this.props.contacts);
+      const id = sortedContacts[sortedContacts.length - 1].id + 1;
 
       const { emailInputValue, phoneInputValue, nameInputValue } = this.state;
 
