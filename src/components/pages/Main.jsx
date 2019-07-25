@@ -24,10 +24,6 @@ class Main extends Component {
     this.props.getContacts();
   }
 
-  componentWillReceiveProps (nextProps) {
-    this.props.getContacts();
-  }
-
   shouldComponentUpdate (nextProps) {
     if (this.props.contacts !== nextProps.contacts) {
       return true;
