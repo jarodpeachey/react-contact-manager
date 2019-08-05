@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Card, CardContent } from '@material-ui/core';
+import { Card, CardContent, CircularProgress } from '@material-ui/core';
 import ContactsList from '../Contacts/ContactsList';
 import AddContact from '../Contacts/AddContact';
 import { getContacts } from '../../actions/contactActions';
@@ -19,20 +19,45 @@ class Main extends Component {
   constructor (props) {
     super(props);
     this.state = {
-
+      contactsListContents: (
+        <Card>
+          <CardContent>
+            <div className="center-text mb-sm">
+              <CircularProgress />
+            </div>
+            <div className="center-text full-width">
+              Loading Contacts...
+            </div>
+          </CardContent>
+        </Card>
+      ),
     };
   }
 
   componentDidMount () {
     this.props.getContacts();
+
     this.props.testConnection();
+
+    if (this.props.connectionStatus === true) {
+      setTimeout(() => {
+        this.setState({ connectionTested: true });
+      }, 7000);
+    } else if (this.props.connectionStatus !== true) {
+      setTimeout(() => {
+        this.setState({ connectionTested: true });
+      }, 1500);
+    }
   }
 
-  shouldComponentUpdate (nextProps) {
+  shouldComponentUpdate (nextProps, nextState) {
     if (this.props.contacts !== nextProps.contacts) {
       return true;
     }
     if (this.props.connectionStatus !== nextProps.connectionStatus) {
+      return true;
+    }
+    if (this.state.connectionTested !== nextState.connectionTested) {
       return true;
     }
     return false;
@@ -41,25 +66,9 @@ class Main extends Component {
   render () {
     const { contacts, connectionStatus } = this.props;
 
-    let contactsListContents = (
-      <Card>
-        <CardContent>
-          Loading Contacts...
-        </CardContent>
-      </Card>
-    );
+    let { contactsListContents } = this.state;
 
-    setTimeout(() => {
-      contactsListContents = (
-        <Card>
-          <CardContent>
-            This is taking longer than usual. Please refresh the page.
-          </CardContent>
-        </Card>
-      );
-    }, 3000);
-
-    if (!contacts && !connectionStatus) {
+    if (this.state.connectionTested && !contacts && !connectionStatus) {
       contactsListContents = (
         <Card>
           <CardContent>
@@ -67,7 +76,7 @@ class Main extends Component {
           </CardContent>
         </Card>
       );
-    } else if (!contacts && connectionStatus) {
+    } else if (this.state.connectionTested && !contacts && connectionStatus) {
       contactsListContents = (
         <Card>
           <CardContent>
@@ -75,7 +84,7 @@ class Main extends Component {
           </CardContent>
         </Card>
       );
-    } else if (contacts && connectionStatus) {
+    } else if (this.state.connectionTested && contacts && connectionStatus) {
       contactsListContents = (
         <Card className="p-sm">
           <CardContent>
