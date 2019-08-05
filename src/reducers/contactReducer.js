@@ -30,7 +30,7 @@ const contactReducer = (state = initialState, action) => {
     case ADD_CONTACT:
       return {
         ...state,
-        contacts: [action.payload, ...state.contacts],
+        contacts: [...state.contacts, action.payload],
       };
     case DELETE_CONTACT:
       console.log('Deleting contact:', action.payload);

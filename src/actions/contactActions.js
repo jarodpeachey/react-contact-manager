@@ -18,13 +18,13 @@ export const addContact = (id, name, email, phone) => async (dispatch) => {
     phone,
   };
 
-  axios.post('https://contactmanager-api.herokuapp.com/contacts', contact)
+  const response = await axios.post('https://contactmanager-api.herokuapp.com/contacts', contact)
     .then((res) => { console.log(res); })
     .catch((err) => { console.log(err); });
 
   dispatch({
     type: ADD_CONTACT,
-    payload: contact,
+    payload: response,
   });
 };
 
