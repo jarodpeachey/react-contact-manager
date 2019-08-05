@@ -11,7 +11,7 @@ import { testConnection } from '../../actions/connectionAction';
 class Main extends Component {
   static propTypes = {
     contacts: PropTypes.array,
-    connectionStatus: PropTypes.number,
+    connectionStatus: PropTypes.bool,
     getContacts: PropTypes.func,
     testConnection: PropTypes.func,
   };
@@ -49,7 +49,17 @@ class Main extends Component {
       </Card>
     );
 
-    const setNoConnection = () => {
+    setTimeout(() => {
+      contactsListContents = (
+        <Card>
+          <CardContent>
+            This is taking longer than usual. Please refresh the page.
+          </CardContent>
+        </Card>
+      );
+    }, 3000);
+
+    if (!contacts && !connectionStatus) {
       contactsListContents = (
         <Card>
           <CardContent>
@@ -57,10 +67,6 @@ class Main extends Component {
           </CardContent>
         </Card>
       );
-    };
-
-    if (!contacts && !connectionStatus) {
-      setTimeout(setNoConnection, 3000);
     } else if (!contacts && connectionStatus) {
       contactsListContents = (
         <Card>

@@ -10,8 +10,8 @@ export const testConnection = () => async (dispatch) => {
       console.log(res.status);
       connectionStatus = true;
     })
-    .catch((res) => {
-      console.log(res.status);
+    .catch((err) => {
+      console.log(err);
       connectionStatus = false;
     });
 
