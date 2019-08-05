@@ -50,7 +50,13 @@ class Main extends Component {
             </CardContent>
           </Card>
           {!contacts ? (
-            null
+            <Card className="p-sm">
+              <CardContent>
+                <Heading>
+                  <h3 className="m-none">Loading Contacts...</h3>
+                </Heading>
+              </CardContent>
+            </Card>
           ) : (
             <Card className="p-sm">
               <CardContent>

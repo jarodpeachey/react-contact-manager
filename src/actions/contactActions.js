@@ -18,14 +18,20 @@ export const addContact = (id, name, email, phone) => async (dispatch) => {
     phone,
   };
 
-  const response = await axios.post('https://contactmanager-api.herokuapp.com/contacts', contact)
+  await axios.post('https://contactmanager-api.herokuapp.com/contacts', contact)
     .then((res) => { console.log(res); })
     .catch((err) => { console.log(err); });
 
   dispatch({
     type: ADD_CONTACT,
-    payload: response.data,
+    payload: contact,
   });
 };
 
-export const deleteContact = id => ({ type: DELETE_CONTACT, payload: id });
+export const deleteContact = id => async (dispatch) => {
+  await axios.delete(`https://contactmanager-api.herokuapp.com/contacts/${id}`);
+  dispatch({
+    type: DELETE_CONTACT,
+    payload: id,
+  });
+};
