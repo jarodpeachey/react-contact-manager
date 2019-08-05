@@ -24,7 +24,7 @@ export const addContact = (id, name, email, phone) => async (dispatch) => {
 
   dispatch({
     type: ADD_CONTACT,
-    payload: response,
+    payload: response.data,
   });
 };
 
