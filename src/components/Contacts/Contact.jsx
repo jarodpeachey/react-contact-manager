@@ -76,9 +76,6 @@ class Contact extends Component {
               <FlexContainer>
                 <Name>
                   {contact.name}
-                  (
-                  {contact.id}
-                  )
                 </Name>
                 <IconButton onClick={this.toggleContactInformation} classes={{ root: classes.iconButtonSmall }}>
                   <ArrowDropUp />
@@ -108,9 +105,6 @@ class Contact extends Component {
               <FlexContainer>
                 <Name>
                   {contact.name}
-                  (
-                  {contact.id}
-                  )
                 </Name>
                 <IconButton onClick={this.toggleContactInformation} classes={{ root: classes.iconButtonSmall }}>
                   <ArrowDropDown />
