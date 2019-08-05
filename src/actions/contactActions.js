@@ -18,7 +18,7 @@ export const addContact = (id, name, email, phone) => async (dispatch) => {
     phone,
   };
 
-  await axios.post('https://contactmanager-api.herokuapp.com/contacts', contact)
+  axios.post('https://contactmanager-api.herokuapp.com/contacts', contact)
     .then((res) => { console.log(res); })
     .catch((err) => { console.log(err); });
 

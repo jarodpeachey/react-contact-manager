@@ -11,6 +11,7 @@ class AddContact extends Component {
     classes: PropTypes.object,
     addContact: PropTypes.func,
     contacts: PropTypes.array,
+    connectionStatus: PropTypes.bool,
   };
 
   constructor (props) {
@@ -88,9 +89,13 @@ class AddContact extends Component {
 
       const { emailInputValue, phoneInputValue, nameInputValue } = this.state;
 
-      this.props.addContact(id, nameInputValue, emailInputValue, phoneInputValue);
+      if (this.props.connectionStatus === true) {
+        this.props.addContact(id, nameInputValue, emailInputValue, phoneInputValue);
 
-      this.setState({ emailInputValue: '', phoneInputValue: '', nameInputValue: '' });
+        this.setState({ emailInputValue: '', phoneInputValue: '', nameInputValue: '' });
+      } else {
+        alert('There was an error connecting to the internet');
+      }
     }
   }
 

@@ -109,7 +109,7 @@ class Main extends Component {
               <Heading>
                 <h3 className="m-none">Add Contact</h3>
               </Heading>
-              <AddContact contacts={contacts} />
+              <AddContact contacts={contacts} connectionStatus={connectionStatus} />
             </CardContent>
           </Card>
           {contactsListContents}
