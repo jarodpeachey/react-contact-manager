@@ -34,20 +34,24 @@ class Main extends Component {
     };
   }
 
-  componentDidMount () {
-    this.props.getContacts();
-
-    this.props.testConnection();
+  async componentDidMount () {
+    await this.props.testConnection();
 
     if (this.props.connectionStatus === true) {
-      setTimeout(() => {
-        this.setState({ connectionTested: true });
-      }, 7000);
-    } else if (this.props.connectionStatus !== true) {
-      setTimeout(() => {
-        this.setState({ connectionTested: true });
-      }, 1500);
+      await this.props.getContacts();
     }
+
+    this.setState({ connectionTested: true });
+
+    // if (this.props.connectionStatus === true) {
+    //   setTimeout(() => {
+    //     this.setState({ connectionTested: true });
+    //   }, 7000);
+    // } else if (this.props.connectionStatus !== true) {
+    //   setTimeout(() => {
+    //     this.setState({ connectionTested: true });
+    //   }, 1500);
+    // }
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -76,15 +80,9 @@ class Main extends Component {
           </CardContent>
         </Card>
       );
-    } else if (this.state.connectionTested && !contacts && connectionStatus) {
-      contactsListContents = (
-        <Card>
-          <CardContent>
-            No Contacts
-          </CardContent>
-        </Card>
-      );
-    } else if (this.state.connectionTested && contacts && connectionStatus) {
+    }
+
+    if (this.state.connectionTested && contacts && connectionStatus) {
       contactsListContents = (
         <Card className="p-sm">
           <CardContent>
@@ -96,6 +94,12 @@ class Main extends Component {
         </Card>
       );
     }
+
+    // if (this.state.connectionTested && connectionStatus) {
+    //   contactsListContents = (
+    //     <span />
+    //   );
+    // }
 
     return (
       <div>

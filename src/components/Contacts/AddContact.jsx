@@ -78,8 +78,13 @@ class AddContact extends Component {
     if (this.state.emailInputError || this.state.phoneInputError || this.state.emailInputValue === '' || this.state.nameInputValue === '' || this.state.phoneInputValue === '') {
       alert('Please fill in all the fields correctly');
     } else {
-      const sortedContacts = sortByContactId(this.props.contacts);
-      const id = sortedContacts[sortedContacts.length - 1].id + 1;
+      let id = 1;
+
+      if (this.props.contacts) {
+        const sortedContacts = sortByContactId(this.props.contacts);
+
+        id = sortedContacts[sortedContacts.length - 1].id + 1;
+      }
 
       const { emailInputValue, phoneInputValue, nameInputValue } = this.state;
 
