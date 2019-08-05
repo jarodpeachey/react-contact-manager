@@ -6,11 +6,14 @@ import { Card, CardContent } from '@material-ui/core';
 import ContactsList from '../Contacts/ContactsList';
 import AddContact from '../Contacts/AddContact';
 import { getContacts } from '../../actions/contactActions';
+import { testConnection } from '../../actions/connectionAction';
 
 class Main extends Component {
   static propTypes = {
     contacts: PropTypes.array,
+    connectionStatus: PropTypes.number,
     getContacts: PropTypes.func,
+    testConnection: PropTypes.func,
   };
 
   constructor (props) {
@@ -22,20 +25,61 @@ class Main extends Component {
 
   componentDidMount () {
     this.props.getContacts();
+    this.props.testConnection();
   }
 
   shouldComponentUpdate (nextProps) {
     if (this.props.contacts !== nextProps.contacts) {
       return true;
     }
+    if (this.props.connectionStatus !== nextProps.connectionStatus) {
+      return true;
+    }
     return false;
   }
 
   render () {
-    const { contacts } = this.props;
+    const { contacts, connectionStatus } = this.props;
 
-    if (!contacts) {
-      console.log('Empty contacts');
+    let contactsListContents = (
+      <Card>
+        <CardContent>
+          Loading Contacts...
+        </CardContent>
+      </Card>
+    );
+
+    const setNoConnection = () => {
+      contactsListContents = (
+        <Card>
+          <CardContent>
+            There was an error fetching your contacts. Please check your internet connection
+          </CardContent>
+        </Card>
+      );
+    };
+
+    if (!contacts && !connectionStatus) {
+      setTimeout(setNoConnection, 3000);
+    } else if (!contacts && connectionStatus) {
+      contactsListContents = (
+        <Card>
+          <CardContent>
+            No Contacts
+          </CardContent>
+        </Card>
+      );
+    } else if (contacts && connectionStatus) {
+      contactsListContents = (
+        <Card className="p-sm">
+          <CardContent>
+            <Heading>
+              <h3 className="m-none">Contacts List</h3>
+            </Heading>
+            <ContactsList contacts={contacts} />
+          </CardContent>
+        </Card>
+      );
     }
 
     return (
@@ -49,24 +93,7 @@ class Main extends Component {
               <AddContact contacts={contacts} />
             </CardContent>
           </Card>
-          {!contacts ? (
-            <Card className="p-sm">
-              <CardContent>
-                <Heading>
-                  <h3 className="m-none">Loading Contacts...</h3>
-                </Heading>
-              </CardContent>
-            </Card>
-          ) : (
-            <Card className="p-sm">
-              <CardContent>
-                <Heading>
-                  <h3 className="m-none">Contacts List</h3>
-                </Heading>
-                <ContactsList contacts={contacts} />
-              </CardContent>
-            </Card>
-          )}
+          {contactsListContents}
         </div>
       </div>
     );
@@ -85,6 +112,7 @@ const Heading = styled.div`
 
 const mapStateToProps = state => ({
   contacts: state.contacts.contacts,
+  connectionStatus: state.connectionStatus,
 });
 
-export default connect(mapStateToProps, { getContacts })(Main);
+export default connect(mapStateToProps, { getContacts, testConnection })(Main);
