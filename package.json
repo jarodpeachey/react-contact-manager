@@ -9,8 +9,7 @@
   "main": "index.js",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "build": "webpack --mode production",
+    "deploy": "webpack --mode production",
     "start": "webpack --mode development && webpack-dev-server --mode development --open",
     "heroku-postbuild": "webpack -p",
     "test": "npm run eslint"
