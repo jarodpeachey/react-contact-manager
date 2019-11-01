@@ -23,14 +23,6 @@ class Application extends Component {
     };
   }
 
-  // componentDidMount () {
-
-  // }
-
-  // shouldComponentUpdate () {
-
-  // }
-
   render () {
     const header = <Header />;
 
